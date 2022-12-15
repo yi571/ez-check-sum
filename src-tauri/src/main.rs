@@ -3,6 +3,9 @@
     windows_subsystem = "windows"
 )]
 
+use std::{fs::File, io};
+
+use md5::Md5;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256, Sha512};
 
@@ -24,31 +27,29 @@ impl HashData {
 }
 
 #[tauri::command]
-async fn get_hash(
-    path: String,
-    checkmd5: bool,
-    checksha256: bool,
-    checksha512: bool,
-) -> HashData {
+async fn get_hash(path: String, checkmd5: bool, checksha256: bool, checksha512: bool) -> HashData {
     let mut hash_data = HashData::new();
-
-    let file = std::fs::read(path).unwrap();
-
+    
     if checkmd5 {
-        let result = md5::compute(&file);
+        let mut file = File::open(&path).unwrap();
+        let mut hasher = Md5::new();
+        io::copy(&mut file, &mut hasher).unwrap();
+        let result = hasher.finalize();
         hash_data.md5 = format!("{:x}", result);
     }
 
     if checksha256 {
+        let mut file = File::open(&path).unwrap();
         let mut hasher = Sha256::new();
-        hasher.update(&file);
+        io::copy(&mut file, &mut hasher).unwrap();
         let result = hasher.finalize();
         hash_data.sha256 = format!("{:x}", result);
     }
 
     if checksha512 {
+        let mut file = File::open(&path).unwrap();
         let mut hasher = Sha512::new();
-        hasher.update(&file);
+        io::copy(&mut file, &mut hasher).unwrap();
         let result = hasher.finalize();
         hash_data.sha512 = format!("{:x}", result);
     }
