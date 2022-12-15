@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
-import { DocumentCopy } from '@element-plus/icons-vue'
+import { DocumentCopy, Check } from '@element-plus/icons-vue'
 import { open } from '@tauri-apps/api/dialog';
 import { ElMessage } from 'element-plus'
 
@@ -14,6 +14,20 @@ const data_sha256 = ref('')
 const data_sha512 = ref('')
 
 const running = ref('選擇檔案')
+
+const compare = ref('')
+const md5Match = computed(() => {
+    console.log("compare.value.toLowerCase()", compare.value.toLowerCase())
+    return ((data_md5.value != '') && (compare.value.toLowerCase() == data_md5.value))? Check:DocumentCopy
+})
+const sha256Match = computed(() => {
+    console.log("compare.value.toLowerCase()", compare.value.toLowerCase())
+    return ((data_sha256.value != '') && (compare.value.toLowerCase() == data_sha256.value))? Check:DocumentCopy
+})
+const sha512Match = computed(() => {
+    console.log("compare.value.toLowerCase()", compare.value.toLowerCase())
+    return ((data_sha512.value != '') && (compare.value.toLowerCase() == data_sha512.value))? Check:DocumentCopy
+})
 
 async function select_file() {
     console.log("check_md5", check_md5)
@@ -77,25 +91,27 @@ class HashData {
         <el-input v-show="check_md5" v-model="data_md5" disabled :key="1">
             <template #prepend>MD5</template>
             <template #append>
-                <el-button :icon="DocumentCopy" @click="copy_to_clipboard(data_md5)" :disabled="data_md5 == ''" />
+                <el-button :icon="md5Match" @click="copy_to_clipboard(data_md5)" :disabled="data_md5 == ''" />
             </template>
         </el-input>
 
         <el-input v-show="check_sha256" v-model="data_sha256" disabled :key="2">
             <template #prepend>SHA256</template>
             <template #append>
-                <el-button :icon="DocumentCopy" @click="copy_to_clipboard(data_sha256)" :disabled="data_sha256 == ''" />
+                <el-button :icon="sha256Match" @click="copy_to_clipboard(data_sha256)" :disabled="data_sha256 == ''" />
             </template>
         </el-input>
 
         <el-input v-show="check_sha512" v-model="data_sha512" disabled :key="3">
             <template #prepend>SHA512</template>
             <template #append>
-                <el-button :icon="DocumentCopy" @click="copy_to_clipboard(data_sha512)" :disabled="data_sha512 == ''" />
+                <el-button :icon="sha512Match" @click="copy_to_clipboard(data_sha512)" :disabled="data_sha512 == ''" />
             </template>
         </el-input>
 
         <el-button @click="select_file()" :disabled="running == '計算中...'" :key="4">{{ running }}</el-button>
+
+        <el-input v-model="compare" placeholder="需要比對的哈希值" :disabled="running == '計算中...'" />
     </el-space>
 
 </template>

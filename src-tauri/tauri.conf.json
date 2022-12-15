@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "ez-check-sum",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "tauri": {
     "allowlist": {
@@ -64,7 +64,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 220,
+        "height": 250,
         "resizable": false,
         "title": "ez-check-sum",
         "width": 800
