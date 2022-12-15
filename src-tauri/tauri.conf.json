@@ -64,7 +64,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 200,
+        "height": 220,
         "resizable": false,
         "title": "ez-check-sum",
         "width": 800
