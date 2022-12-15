@@ -15,7 +15,4 @@ declare module '@vue/runtime-core' {
     Greet: typeof import('./src/components/Greet.vue')['default']
     SumComponent: typeof import('./src/components/SumComponent.vue')['default']
   }
-  export interface ComponentCustomProperties {
-    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
-  }
 }

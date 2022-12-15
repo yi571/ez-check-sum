@@ -28,7 +28,7 @@ async function select_file() {
     data_md5.value = data.md5
     data_sha256.value = data.sha256
     data_sha512.value = data.sha512
-    running.value = '選擇檔案'
+    running.value = selected.toString()
 }
 
 async function copy_to_clipboard(data: string) {
