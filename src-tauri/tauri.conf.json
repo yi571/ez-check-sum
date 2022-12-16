@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "ez-check-sum",
-    "version": "0.4.0"
+    "productName": "ez-checksum",
+    "version": "0.5.0"
   },
   "tauri": {
     "allowlist": {
@@ -52,7 +52,10 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "wix":{
+          "language": ["en-US", "zh-TW"]
+        }
       }
     },
     "security": {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
 import { DocumentCopy, Check } from '@element-plus/icons-vue'
 import { open } from '@tauri-apps/api/dialog';
@@ -18,15 +18,21 @@ const running = ref('選擇檔案')
 const compare = ref('')
 const md5Match = computed(() => {
     console.log("compare.value.toLowerCase()", compare.value.toLowerCase())
-    return ((data_md5.value != '') && (compare.value.toLowerCase() == data_md5.value))? Check:DocumentCopy
+    return ((data_md5.value != '') && (compare.value.toLowerCase() == data_md5.value)) ? Check : DocumentCopy
 })
 const sha256Match = computed(() => {
     console.log("compare.value.toLowerCase()", compare.value.toLowerCase())
-    return ((data_sha256.value != '') && (compare.value.toLowerCase() == data_sha256.value))? Check:DocumentCopy
+    return ((data_sha256.value != '') && (compare.value.toLowerCase() == data_sha256.value)) ? Check : DocumentCopy
 })
 const sha512Match = computed(() => {
     console.log("compare.value.toLowerCase()", compare.value.toLowerCase())
-    return ((data_sha512.value != '') && (compare.value.toLowerCase() == data_sha512.value))? Check:DocumentCopy
+    return ((data_sha512.value != '') && (compare.value.toLowerCase() == data_sha512.value)) ? Check : DocumentCopy
+})
+
+onMounted(() => {
+    document.oncontextmenu = function () {
+        return false;
+    };
 })
 
 async function select_file() {
@@ -82,9 +88,9 @@ class HashData {
 </script>
 
 <template>
-    <el-checkbox v-model="check_md5" :disabled="running == '計算中...'" >MD5</el-checkbox>
-    <el-checkbox v-model="check_sha256" :disabled="running == '計算中...'" >SHA256</el-checkbox>
-    <el-checkbox v-model="check_sha512" :disabled="running == '計算中...'" >SHA512</el-checkbox>
+    <el-checkbox v-model="check_md5" :disabled="running == '計算中...'">MD5</el-checkbox>
+    <el-checkbox v-model="check_sha256" :disabled="running == '計算中...'">SHA256</el-checkbox>
+    <el-checkbox v-model="check_sha512" :disabled="running == '計算中...'">SHA512</el-checkbox>
     <el-space fill wrap direction="vertical" style="width: 100%">
 
 
