@@ -1,8 +1,9 @@
 name: 'release'
 
-on: 
-  issues:
-    types: [opened]
+on:
+  push:
+    branches:
+      - release
 
 jobs:
   create-release:
