@@ -69,7 +69,7 @@
         "fullscreen": false,
         "height": 250,
         "resizable": false,
-        "title": "ez-check-sum",
+        "title": "ez-checksum",
         "width": 800
       }
     ]
